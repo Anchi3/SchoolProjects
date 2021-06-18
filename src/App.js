@@ -13,6 +13,7 @@ class App extends Component {
     patient: {},
     currentDoctorId: 0,
     currentSymptom: "",
+    
   };
 
   componentDidMount() {
@@ -35,10 +36,9 @@ class App extends Component {
   handleSymptom = (e) => {
 
     this.setState({ currentSymptom: e.target.value });
-
-
   };
 
+  
 
 
   render() {
@@ -81,12 +81,12 @@ class App extends Component {
               placeholder="Please limit to 500 characters"
             ></textarea>
           </div>
-
+          
           <button
           type="button"
           className="btn btn-success  m-2 btn-lg"
-          disabled={this.state.isCreate}
-          onClick={this.AddNewPatient}
+          disabled={this.state.currentSymptom === ""}
+          onClick={this.AddNewAppointment}
         >
           Create New Appointment
         </button>
