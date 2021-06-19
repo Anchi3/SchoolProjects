@@ -2,7 +2,6 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import NavBar from "./components/navbar";
 import React, { Component } from "react";
-
 import axios from "axios";
 import Doctors from "./components/doctors";
 import Patient from "./components/patient";
@@ -34,9 +33,25 @@ class App extends Component {
   };
 
   handleSymptom = (e) => {
-
     this.setState({ currentSymptom: e.target.value });
   };
+  
+
+  handleIntake = () => {
+    let appointment = {
+      symptoms: this.state.currentSymptom, 
+      DoctorId: this.state.currentDoctorId, 
+      PatientId: this.state.patient.id
+    };
+    
+    axios.post("https://localhost:5001/IntakeForms", appointment).then((response) => {
+      console.log("POST : ", response);
+    });
+
+    window.alert("Your Appointment has been successfully booked!");
+    
+  };
+
 
   
 
@@ -46,19 +61,7 @@ class App extends Component {
       <React.Fragment>
         <NavBar>Doctor's Patient Intake Form</NavBar>
         <main className="container">
-          <br />
-          <p>
-            Current Doctor ID: &nbsp;
-            {this.state.currentDoctorId}
-            <br />
-            Current Patient ID: &nbsp;
-            {this.state.patient.id}
-            <br />
-           {/*Current Patient Symptom: &nbsp;
-            {this.state.currentSymptom}*/}
-          </p>
-          <br />
-
+          
           <hr />
           <b>Please Choose Your Preferred Physician:</b><br /><br />
           <Doctors
@@ -85,13 +88,19 @@ class App extends Component {
           <button
           type="button"
           className="btn btn-success  m-2 btn-lg"
-          disabled={this.state.currentSymptom === ""}
-          onClick={this.AddNewAppointment}
-        >
+          onClick={this.handleIntake}
+          disabled={
+            this.state.currentDoctorId === 0 || 
+            this.state.patient.id === undefined ||
+            this.state.currentSymptom === ""
+          }
+          >
           Create New Appointment
-        </button>
+          </button>
+
         </main>
       </React.Fragment>
+
     );
   }
 }
