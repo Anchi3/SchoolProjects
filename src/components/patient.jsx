@@ -10,8 +10,13 @@ class Patient extends Component {
 
   handleId = (id) => {
     axios.get("https://localhost:5001/Patients/" + id).then((response) => {
-      this.setState({ patient: response.data === "" ? {} : response.data });
-      this.props.onCurrentPatient(response.data);
+
+      let patient = Object.assign({}, response.data);
+      patient.id = id;
+
+      this.setState({ patient });
+      this.props.onCurrentPatient(patient);
+
       this.setState({ isCreate: response.data.name !== undefined });
     });
   };
@@ -38,13 +43,14 @@ class Patient extends Component {
   render() {
     return (
       <React.Fragment>
-        <b>Patient Search Id:</b>
+        <b>Patient ID Search:</b>
         <input
           className="form-control m-2"
           type="number"
-          placeholder="Search by Id"
+          placeholder="Search by ID"
           onBlur={(e) => this.handleId(e.target.value)}
         ></input>
+        
         <br />
         <b>Patient Details:</b>
         <br /><br />

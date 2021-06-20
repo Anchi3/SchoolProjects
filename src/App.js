@@ -48,8 +48,8 @@ class App extends Component {
       console.log("POST : ", response);
     });
 
-    window.alert("Your Appointment has been successfully booked!");
-    
+    <div >{window.alert("Your Appointment has been successfully booked!")}</div>
+
   };
 
 
