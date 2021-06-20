@@ -11,7 +11,7 @@ class Patient extends Component {
   handleId = (id) => {
     axios.get("https://localhost:5001/Patients/" + id).then((response) => {
 
-      let patient = Object.assign({}, response.data);
+      let patient = Object.assign({}, response.data); 
       patient.id = id;
 
       this.setState({ patient });
